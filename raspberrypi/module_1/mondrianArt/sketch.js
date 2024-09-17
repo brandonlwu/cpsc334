@@ -39,7 +39,7 @@ let c3;
 let colors;
 let shuffledColors;
 
-let speed = 5;
+let speed;
 
 
 let time = 0;
@@ -47,6 +47,7 @@ let time = 0;
 function setup() {
   createCanvas(windowWidth, windowHeight);
   scale = Math.max(windowHeight, windowWidth)/9;
+  speed = Math.max(windowWidth,windowHeight)/90;
   xScale = windowWidth/9;
   yScale = windowWidth/9;
   background(255);
