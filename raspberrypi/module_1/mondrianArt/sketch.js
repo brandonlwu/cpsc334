@@ -1,3 +1,4 @@
+let scale = 50;
 
 let height = 450;
 let width = 450;
@@ -35,11 +36,13 @@ let c3;
 let colors;
 let shuffledColors;
 
+let speed = 5;
+
 
 let time = 0;
 
 function setup() {
-  createCanvas(height, width);
+  createCanvas(width, height);
   background(255);
   strokeCap(SQUARE);
   firstLine = random(grids);
@@ -74,16 +77,18 @@ function setup() {
   
   if (fourthLineEnd == 9) {
     fifthLine = random(grids.filter(item => item !== thirdLine && item!== secondLine));
+  } else {
+    fifthLine = -1;
   }
   
   if (firstLine < fourthLine) {
-    y5 = firstLine*50;
-    y5s = firstLine*50;
-    y5e = fourthLine*50;
+    y5 = firstLine*scale;
+    y5s = firstLine*scale;
+    y5e = fourthLine*scale;
   } else {
-    y5 = fourthLine*50;
-    y5s = fourthLine*50;
-    y5e = firstLine*50;
+    y5 = fourthLine*scale;
+    y5s = fourthLine*scale;
+    y5e = firstLine*scale;
   }
   
   sixthLine = random([1,2,3])
@@ -95,7 +100,7 @@ function setup() {
   
   
   y = 0;
-  y2 = 450;
+  y2 = width;
   y3 = 0;
   y4 = 0;
   y6 = 0;
@@ -161,9 +166,9 @@ function draw() {
   
   fill(r1,g1,b1);
   if (fourthLine < firstLine) {
-    rect(firstLine*50, 0, (450-firstLine*50), secondLine*50);
+    rect(firstLine*scale, 0, (width-firstLine*scale), secondLine*scale);
   } else {
-    rect(fourthLine*50, 0, (450-fourthLine*50), secondLine*50);
+    rect(fourthLine*scale, 0, (width-fourthLine*scale), secondLine*scale);
   }
   
   fill(r2,g2,b2);
@@ -172,17 +177,17 @@ function draw() {
     if (fourthLine > firstLine) {
       console.log("here");
       let lowestLine = Math.max(fifthLine, secondLine);
-        rect(firstLine*50,lowestLine*50, (fourthLine-firstLine)*50, 450-fifthLine*50);
+        rect(firstLine*scale,lowestLine*scale, (fourthLine-firstLine)*scale, height-fifthLine*scale);
     } else {
       console.log('h')
       let lowestLine = Math.max(fifthLine, thirdLine);
-        rect(fourthLine*50,lowestLine*50, (firstLine-fourthLine)*50, 450-fifthLine*50);
+        rect(fourthLine*scale,lowestLine*scale, (firstLine-fourthLine)*scale, height-fifthLine*scale);
     }
   } else {
     if (secondLineEnd == 0) {
-      rect(0,Math.max(thirdLine, secondLine)*50, firstLine*50, 450 - Math.max(thirdLine, secondLine)*50);
+      rect(0,Math.max(thirdLine, secondLine)*scale, firstLine*scale, height - Math.max(thirdLine, secondLine)*scale);
     } else {
-      rect(0,thirdLine*50, firstLine*50, 450 -thirdLine*50);
+      rect(0,thirdLine*scale, firstLine*scale, height -thirdLine*scale);
     }
   }
 
@@ -190,47 +195,47 @@ function draw() {
   fill(r3,g3,b3);
   if (fourthLine < firstLine) {
     if (secondLine < thirdLine && secondLineEnd == 0) {
-      rect(0,0, fourthLine*50, secondLine*50);
+      rect(0,0, fourthLine*scale, secondLine*scale);
     } else {
-      rect(0,0, fourthLine*50, thirdLine*50);
+      rect(0,0, fourthLine*scale, thirdLine*scale);
     }
   } else {
     if (secondLine < thirdLine && secondLineEnd == 0) {
-      rect(0,0, firstLine*50, secondLine*50);
+      rect(0,0, firstLine*scale, secondLine*scale);
     } else {
-      rect(0,0, firstLine*50, thirdLine*50);
+      rect(0,0, firstLine*scale, thirdLine*scale);
     }
   }
 
   
-  if (y < 450) {
-    y+=5;
+  if (y < height) {
+    y+=speed;
   }
-  if (y > secondLineEnd*50 && y2 > secondLineEnd*50) {
-    y2-=5;
+  if (y > secondLineEnd*scale && y2 > secondLineEnd*scale) {
+    y2-=speed;
   }
-  if (y > 450- firstLine*50 && y3 < firstLine*50) {
-    y3+=5;
+  if (y > height- firstLine*scale && y3 < firstLine*scale) {
+    y3+=speed;
   }
-  if (y > 450 - fourthLineEnd*50 && y4 < fourthLineEnd*50) {
-    y4+=5;
+  if (y > height - fourthLineEnd*scale && y4 < fourthLineEnd*scale) {
+    y4+=speed;
   }
-  if (y > 450 - (Math.abs(fourthLine-firstLine))*50 && y5s*50 < y5e*50 ) {
-    y5s+=5;
+  if (y > height - (Math.abs(fourthLine-firstLine))*scale && y5s*scale < y5e*scale ) {
+    y5s+=speed;
   }
   
-  if (y > 450 - firstLine*50 && y6 < firstLine*50 ) {
-    y6+=5;
+  if (y > height - firstLine*scale && y6 < firstLine*scale ) {
+    y6+=speed;
   }
 
   strokeWeight(10);
   stroke(51, 51, 51);
-  line(firstLine*50, 0, firstLine*50, y);
-  line(y2, secondLine*50, 450, secondLine*50);
-  line(0, thirdLine*50, y3, thirdLine*50);
-  line(fourthLine*50, 0, fourthLine*50, y4);
-  line(y5, fifthLine*50, y5s, fifthLine*50)
-  // line(0, sixthLine*50, y6, sixthLine*50)
+  line(firstLine*scale, 0, firstLine*scale, y);
+  line(y2, secondLine*scale, width, secondLine*scale);
+  line(0, thirdLine*scale, y3, thirdLine*scale);
+  line(fourthLine*scale, 0, fourthLine*scale, y4);
+  line(y5, fifthLine*scale, y5s, fifthLine*scale);
+  // line(0, sixthLine*scale, y6, sixthLine*scale)
   
   if (time < 300) {
     time++;
