@@ -41,6 +41,7 @@ let shuffledColors;
 
 let speed;
 
+let randrot;
 
 let time = 0;
 
@@ -49,7 +50,10 @@ function setup() {
   scale = Math.max(windowHeight, windowWidth)/9;
   speed = Math.max(windowWidth,windowHeight)/90;
   xScale = windowWidth/9;
-  yScale = windowWidth/9;
+  yScale = windowHeight/9;
+  xSpeed = Math.max(windowWidth)/90;
+  ySpeed = Math.max(windowHeight)/90;
+  randrot = random(10);
   background(255);
   strokeCap(SQUARE);
   firstLine = random(grids);
@@ -89,13 +93,13 @@ function setup() {
   }
   
   if (firstLine < fourthLine) {
-    y5 = firstLine*scale;
-    y5s = firstLine*scale;
-    y5e = fourthLine*scale;
+    y5 = firstLine*xScale;
+    y5s = firstLine*xScale;
+    y5e = fourthLine*xScale;
   } else {
-    y5 = fourthLine*scale;
-    y5s = fourthLine*scale;
-    y5e = firstLine*scale;
+    y5 = fourthLine*xScale;
+    y5s = fourthLine*xScale;
+    y5e = firstLine*xScale;
   }
   
   sixthLine = random([1,2,3])
@@ -127,6 +131,11 @@ function setup() {
 
 function draw() {
   fill(255);  
+  if (randrot >=7) {
+    angleMode(DEGREES);
+    rotate(180);
+    translate(-windowWidth, -windowHeight)
+  }
   switch(shuffledColors[0]) {
     case 1:
       if (r1 < 226) {
@@ -173,9 +182,9 @@ function draw() {
   
   fill(r1,g1,b1);
   if (fourthLine < firstLine) {
-    rect(firstLine*scale, 0, (windowWidth-firstLine*scale), secondLine*scale);
+    rect(firstLine*xScale, 0, (windowWidth-firstLine*xScale), secondLine*yScale);
   } else {
-    rect(fourthLine*scale, 0, (windowWidth-fourthLine*scale), secondLine*scale);
+    rect(fourthLine*xScale, 0, (windowWidth-fourthLine*xScale), secondLine*yScale);
   }
   
   fill(r2,g2,b2);
@@ -184,17 +193,17 @@ function draw() {
     if (fourthLine > firstLine) {
       console.log("here");
       let lowestLine = Math.max(fifthLine, secondLine);
-        rect(firstLine*scale,lowestLine*scale, (fourthLine-firstLine)*scale, windowHeight-fifthLine*scale);
+        rect(firstLine*xScale,lowestLine*yScale, (fourthLine-firstLine)*xScale, windowHeight-fifthLine*yScale);
     } else {
       console.log('h')
       let lowestLine = Math.max(fifthLine, thirdLine);
-        rect(fourthLine*scale,lowestLine*scale, (firstLine-fourthLine)*scale, windowHeight-fifthLine*scale);
+        rect(fourthLine*xScale,lowestLine*yScale, (firstLine-fourthLine)*xScale, windowHeight-fifthLine*yScale);
     }
   } else {
     if (secondLineEnd == 0) {
-      rect(0,Math.max(thirdLine, secondLine)*scale, firstLine*scale, windowHeight - Math.max(thirdLine, secondLine)*scale);
+      rect(0,Math.max(thirdLine, secondLine)*yScale, firstLine*xScale, windowHeight - Math.max(thirdLine, secondLine)*yScale);
     } else {
-      rect(0,thirdLine*scale, firstLine*scale, windowHeight -thirdLine*scale);
+      rect(0,thirdLine*yScale, firstLine*xScale, windowHeight -thirdLine*yScale);
     }
   }
 
@@ -202,33 +211,33 @@ function draw() {
   fill(r3,g3,b3);
   if (fourthLine < firstLine) {
     if (secondLine < thirdLine && secondLineEnd == 0) {
-      rect(0,0, fourthLine*scale, secondLine*scale);
+      rect(0,0, fourthLine*xScale, secondLine*yScale);
     } else {
-      rect(0,0, fourthLine*scale, thirdLine*scale);
+      rect(0,0, fourthLine*xScale, thirdLine*yScale);
     }
   } else {
     if (secondLine < thirdLine && secondLineEnd == 0) {
-      rect(0,0, firstLine*scale, secondLine*scale);
+      rect(0,0, firstLine*xScale, secondLine*yScale);
     } else {
-      rect(0,0, firstLine*scale, thirdLine*scale);
+      rect(0,0, firstLine*xScale, thirdLine*yScale);
     }
   }
 
   
   if (y < windowHeight) {
-    y+=speed;
+    y+=ySpeed;
   }
-  if (y > secondLineEnd*scale && y2 > secondLineEnd*scale) {
-    y2-=speed;
+  if (y > secondLineEnd*yScale && y2 > secondLineEnd*xScale) {
+    y2-=xSpeed;
   }
-  if (y > windowHeight- firstLine*scale && y3 < firstLine*scale) {
-    y3+=speed;
+  if (y > windowHeight- firstLine*yScale && y3 < firstLine*xScale) {
+    y3+=xSpeed;
   }
-  if (y > windowHeight - fourthLineEnd*scale && y4 < fourthLineEnd*scale) {
-    y4+=speed;
+  if (y > windowHeight - fourthLineEnd*yScale && y4 < fourthLineEnd*yScale) {
+    y4+=ySpeed;
   }
-  if (y > windowHeight - (Math.abs(fourthLine-firstLine))*scale && y5s*scale < y5e*scale ) {
-    y5s+=speed;
+  if (y > windowHeight - (Math.abs(fourthLine-firstLine))*yScale && y5s*xScale < y5e*xScale ) {
+    y5s+=xSpeed;
   }
   
   if (y > windowHeight - firstLine*scale && y6 < firstLine*scale ) {
@@ -237,11 +246,11 @@ function draw() {
 
   strokeWeight(10);
   stroke(51, 51, 51);
-  line(firstLine*scale, 0, firstLine*scale, y);
-  line(y2, secondLine*scale, windowWidth, secondLine*scale);
-  line(0, thirdLine*scale, y3, thirdLine*scale);
-  line(fourthLine*scale, 0, fourthLine*scale, y4);
-  line(y5, fifthLine*scale, y5s, fifthLine*scale);
+  line(firstLine*xScale, 0, firstLine*xScale, y);
+  line(y2, secondLine*yScale, windowWidth, secondLine*yScale);
+  line(0, thirdLine*yScale, y3, thirdLine*yScale);
+  line(fourthLine*xScale, 0, fourthLine*xScale, y4);
+  line(y5, fifthLine*yScale, y5s, fifthLine*yScale);
   // line(0, sixthLine*scale, y6, sixthLine*scale)
   
   if (time < 300) {
@@ -249,6 +258,5 @@ function draw() {
   } else {
     time = 0;
     setup();
-  }
-  
+  }  
 }
