@@ -15,5 +15,6 @@ GPIO.setup(pushpin, GPIO.IN) # set GPIO pin 17 as Input
 
 while True:
 	if GPIO.input(pushpin) == 0:
-		print("pushed")
+		print("x" + GPIO.input(xpin))
+		print("y" + GPIO.input(ypin))
 	sleep(0.2)
