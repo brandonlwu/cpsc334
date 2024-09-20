@@ -15,6 +15,10 @@ GPIO.setup(pushpin, GPIO.IN) # set GPIO pin 17 as Input
 
 while True:
 	if GPIO.input(pushpin) == 0:
-		print("x" + str(GPIO.input(xpin)))
-		print("y" + str(GPIO.input(ypin)))
+		if GPIO.input(xpin) == 0:
+			print("left state")
+		elif GPIO.input(ypin) == 0:
+			print("up state")
+		else:
+			print("other states")
 	sleep(0.2)
