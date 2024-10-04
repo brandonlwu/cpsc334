@@ -1,26 +1,14 @@
-# import the libraries
-import RPi.GPIO as GPIO
-from time import sleep
-GPIO.setmode(GPIO.BCM)
+#!/usr/bin/python
+import os, sys
+import serial
+import time
 
-# set the pin numbers to be used from Broadcom chip
+ser = serial.Serial('/dev/cu.usbserial-110',9600, timeout = 5)
 
-xpin = 2
-ypin = 3
-pushpin = 17 # assign a variable name to pin 17
-switchpin = 27
-GPIO.setup(xpin, GPIO.IN) # set GPIO pin 2 as Input
-GPIO.setup(ypin, GPIO.IN) # set GPIO pin 3 as Input
-GPIO.setup(pushpin, GPIO.IN) # set GPIO pin 17 as Input
-GPIO.setup(switchpin, GPIO.IN)
-
-
+# listen for the input, exit if nothing received in timeout period
 while True:
-	if GPIO.input(switchpin) == 0:
-		if GPIO.input(xpin) == 0:
-			print("left state")
-		elif GPIO.input(ypin) == 0:
-			print("up state")
-		else:
-			print("other states")
-	sleep(0.2)
+	line = ser.readline()
+	print(line)
+	if len(line) == 0:
+		print("Time out! Exit.\n")
+		sys.exit()
