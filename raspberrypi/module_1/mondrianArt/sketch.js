@@ -1,7 +1,4 @@
 
-// let artHeight = windowHeight;
-// let artWidth = windowWidth;
-
 let scale;
 let xScale;
 let yScale;
